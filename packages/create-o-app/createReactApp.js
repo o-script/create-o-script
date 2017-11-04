@@ -62,7 +62,7 @@ const program = new commander.Command(packageJson.name)
   .option('--verbose', 'print additional logs')
   .option(
     '--scripts-version <alternative-package>',
-    'use a non-standard version of react-scripts'
+    'use a non-standard version of o-scripts'
   )
   .allowUnknownOption()
   .on('--help', () => {
@@ -74,12 +74,12 @@ const program = new commander.Command(packageJson.name)
     console.log(`      - a specific npm version: ${chalk.green('0.8.2')}`);
     console.log(
       `      - a custom fork published on npm: ${chalk.green(
-        'my-react-scripts'
+        'my-o-scripts'
       )}`
     );
     console.log(
       `      - a .tgz archive: ${chalk.green(
-        'https://mysite.com/my-react-scripts-0.8.2.tgz'
+        'https://mysite.com/my-o-scripts-0.8.2.tgz'
       )}`
     );
     console.log(
@@ -173,8 +173,8 @@ function createApp(name, verbose, version, template) {
           `Please update to Node 6 or higher for a better, fully supported experience.\n`
       )
     );
-    // Fall back to latest supported react-scripts on Node 4
-    version = 'react-scripts@0.9.x';
+    // Fall back to latest supported o-scripts on Node 4
+    version = 'o-scripts@0.9.x';
   }
 
   if (!useYarn) {
@@ -188,8 +188,8 @@ function createApp(name, verbose, version, template) {
           )
         );
       }
-      // Fall back to latest supported react-scripts for npm 3
-      version = 'react-scripts@0.9.x';
+      // Fall back to latest supported o-scripts for npm 3
+      version = 'o-scripts@0.9.x';
     }
   }
   run(root, appName, version, verbose, originalDirectory, template, useYarn);
@@ -305,7 +305,7 @@ function run(
       const init = require(scriptsPath);
       init(root, appName, verbose, originalDirectory, template);
 
-      if (version === 'react-scripts@0.9.x') {
+      if (version === 'o-scripts@0.9.x') {
         console.log(
           chalk.yellow(
             `\nNote: the project was boostrapped with an old unsupported version of tools.\n` +
@@ -364,7 +364,7 @@ function run(
 }
 
 function getInstallPackage(version) {
-  let packageToInstall = 'react-scripts';
+  let packageToInstall = 'o-scripts';
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
@@ -432,7 +432,7 @@ function getPackageName(installPackage) {
         return packageName;
       })
       .catch(err => {
-        // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
+        // The package name could be with or without semver version, e.g. o-scripts-0.2.0-alpha.1.tgz
         // However, this function returns package name only without semver version.
         console.log(
           `Could not extract the package name from the archive: ${err.message}`
@@ -449,8 +449,8 @@ function getPackageName(installPackage) {
       });
   } else if (installPackage.indexOf('git+') === 0) {
     // Pull package name out of git urls e.g:
-    // git+https://github.com/mycompany/react-scripts.git
-    // git+ssh://github.com/mycompany/react-scripts.git#v1.2.3
+    // git+https://github.com/mycompany/o-scripts.git
+    // git+ssh://github.com/mycompany/o-scripts.git#v1.2.3
     return Promise.resolve(installPackage.match(/([^/]+)\.git(#.*)?$/)[1]);
   } else if (installPackage.match(/.+@/)) {
     // Do not match @scope/ when stripping off @version or @tag
@@ -518,7 +518,7 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  const dependencies = ['react', 'react-dom', 'o-scripts'].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
